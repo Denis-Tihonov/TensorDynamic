@@ -3,7 +3,29 @@ from numpy import pi
 import pandas as pd
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
+from scipy.linalg import hankel
 
+############################################################################################################
+############################################################################################################
+def delay_embedding_matrix(s, nlags):
+    """Make a matrix with delay embeddings.
+
+    Parameters
+    ----------
+    s : np.array
+        The time series data.
+
+    nlags : int
+        Size of time lags.
+
+    Returns
+    -------
+    delay_embedding_matrix : np.array of shape  (len(s) - lags + 1 , lags)
+        Matrix with lags.
+    """ 
+    N = len(s)
+    delay_embedding_matrix = hankel(s[ : N - nlags + 1], s[N - nlags : N])
+    return delay_embedding_matrix
 ############################################################################################################
 ############################################################################################################
 def plot_short_timeseries(s, frequency, path = None):
